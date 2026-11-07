@@ -68,6 +68,8 @@
         />
 
         <p id="productPrice" class="product-card__price">$199.99</p>
+        <p id="productDiscount"></p>
+        <p id="productDiscountPrice"></p>
 
         <p id="productColor" class="product__color">
           Golden Oak/Saffron Yellow
@@ -78,7 +80,14 @@
         </p>
 
         <div class="product-detail__add">
-          <button id="addToCart" data-id="985RF">Add To Cart</button>
+          <button id="addToCart" data-id="985RF">Add to Cart</button>
+
+          <p
+            id="cart-confirmation"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
         </div>
       </section>
     </main>

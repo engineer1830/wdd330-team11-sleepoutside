@@ -9,10 +9,12 @@ const imageUrls = import.meta.glob("../images/tents/*", {
 export default class ProductDetails {
 
     constructor(productId, dataSource) {
-        this.productId = productId;
-        this.product = {};
-        this.dataSource = dataSource;
-    }
+    this.productId = productId;
+    this.product = {};
+    this.dataSource = dataSource;
+    this.addButtonText = "";
+    this.cartFeedbackTimeout = null;
+}
 
     async init() {
         // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
@@ -21,16 +23,37 @@ export default class ProductDetails {
         this.renderProductDetails();
         // once the HTML is rendered, add a listener to the Add to Cart button
         // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
-        document
-            .getElementById('addToCart')
-            .addEventListener('click', this.addProductToCart.bind(this));
+        const addButton = document.getElementById("addToCart");
+
+this.addButtonText = addButton.textContent.trim();
+
+addButton.addEventListener(
+    "click",
+    this.addProductToCart.bind(this),
+);
     }
 
     addProductToCart() {
-        const cartItems = getLocalStorage("so-cart") || [];
-        cartItems.push(this.product);
-        setLocalStorage("so-cart", cartItems);
-    }
+    const cartContents = getLocalStorage("so-cart") || [];
+    cartContents.push(this.product);
+    setLocalStorage("so-cart", cartContents);
+
+    const button = document.getElementById("addToCart");
+    const confirmation = document.querySelector("#cart-confirmation");
+
+    clearTimeout(this.cartFeedbackTimeout);
+
+    button.textContent = "In the Cart";
+    confirmation.textContent =
+        `${this.product.NameWithoutBrand} added to your cart!`;
+
+    confirmation.classList.add("is-visible");
+
+    this.cartFeedbackTimeout = setTimeout(() => {
+        button.textContent = this.addButtonText;
+        confirmation.classList.remove("is-visible");
+    }, 3000);
+}
 
     renderProductDetails() {
         productDetailsTemplate(this.product);
@@ -38,6 +61,8 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
+    let discount = (product.FinalPrice / product.SuggestedRetailPrice * 100).toFixed(2)
+
     document.querySelector("h2").textContent = product.Brand.Name;
     document.querySelector("h3").textContent = product.NameWithoutBrand;
 
@@ -45,15 +70,15 @@ function productDetailsTemplate(product) {
     productImage.src = imageUrls[product.Image] || product.Image;
     productImage.alt = product.NameWithoutBrand;
 
-    document.getElementById("productPrice").textContent =
-        product.FinalPrice;
+    document.getElementById("productPrice").innerHTML = `MSRP $${product.SuggestedRetailPrice.toFixed(2)}`;
+    
+    document.getElementById("productDiscount").innerHTML = `${discount}% Discount`;
+
+    document.getElementById("productDiscountPrice").innerHTML = `Our Price $${product.FinalPrice.toFixed(2)}`;
 
     document.getElementById("productColor").textContent =
         product.Colors[0].ColorName;
-
     document.getElementById("productDesc").innerHTML =
         product.DescriptionHtmlSimple;
-
-    document.getElementById("addToCart").dataset.id =
-        product.Id;
+    document.getElementById("addToCart").dataset.id = product.Id;
 }
