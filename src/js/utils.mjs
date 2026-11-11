@@ -65,16 +65,39 @@ export async function loadTemplate(path) {
 
 // There may be a issue finding the partials folder . . . if that is the case, try ./partials
 
+// export async function loadHeaderFooter() {
+//   const headerTemplate = await loadTemplate("/partials/header.html");
+//   const footerTemplate = await loadTemplate("/partials/footer.html");
+
+//   const headerElement = document.querySelector("#main-header");
+//   const footerElement = document.querySelector("#main-footer");
+
+//   renderWithTemplate(headerTemplate, headerElement);
+//   renderWithTemplate(footerTemplate, footerElement);
+
+// }
+
 export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate("../partials/header.html");
-  const footerTemplate = await loadTemplate("../partials/footer.html");
+  console.log("loadHeaderFooter started");
+
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  console.log("header template loaded");
+
+  const footerTemplate = await loadTemplate("/partials/footer.html");
+  console.log("footer template loaded");
 
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
 
-  renderWithTemplate(headerTemplate, headerElement);
-  renderWithTemplate(footerTemplate, footerElement);
+  console.log("header element:", headerElement);
+  console.log("footer element:", footerElement);
 
+  renderWithTemplate(headerTemplate, headerElement);
+  console.log("header rendered");
+
+  renderWithTemplate(footerTemplate, footerElement);
+  console.log("footer rendered");
 }
 
-updateCartCount();
+
+// updateCartCount();
