@@ -1,3 +1,8 @@
+import { loadHeaderFooter } from "./utils.mjs";
+
+// Until we have completed the individual task, we are not certain that this stretch work is functional . . . may need to comment out the line below
+// import {cartItemTemplate } from "./ShoppingCart.mjs";
+
 import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
 function renderCartContents(statusMessage = "") {
@@ -94,4 +99,5 @@ document.querySelector(".product-list").addEventListener("click", (event) => {
   }
 });
 
+loadHeaderFooter();
 updateCartCount();
