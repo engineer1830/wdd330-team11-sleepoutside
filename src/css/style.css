@@ -40,6 +40,19 @@ p {
   padding: 0.75rem;
 }
 
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.alert-list p {
+  margin: 0;
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
 .logo {
   line-height: 60px;
   width: 245px;

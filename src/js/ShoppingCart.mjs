@@ -1,4 +1,9 @@
-import {getLocalStorage, setLocalStorage, renderListWithTemplate,} from "./utils.mjs";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  renderListWithTemplate,
+  updateCartCount,
+} from "./utils.mjs";
 
 
 function getCartImageUrl(item) {
@@ -28,18 +33,16 @@ function cartItemTemplate(item) {
         qty: 1
       </p>
 
-      <div class="price-remove">
-        <p class="cart-card__price">
-          $${item.FinalPrice}
-        </p>
+      <p class="cart-card__price">$${item.FinalPrice}</p>
 
-        <span
-          class="remove-item"
-          data-id="${item.Id}"
-        >
-          ❌
-        </span>
-      </div>
+      <button
+        type="button"
+        class="cart-card_remove"
+        data-id="${item.Id}"
+        aria-label="Remove ${item.Name} from cart"
+      >
+        Remove
+      </button>
 
     </li>
   `;
@@ -67,15 +70,16 @@ export default class ShoppingCart {
     );
 
     this.renderCartTotal();
+    document.querySelector("#empty-cart-message").hidden =
+      this.cartItems.length > 0;
 
     document
-      .querySelectorAll(".remove-item")
+      .querySelectorAll(".cart-card_remove")
       .forEach((button) => {
         button.addEventListener(
           "click",
           (event) => {
-            const id =
-              event.target.dataset.id;
+            const id = event.target.dataset.id;
 
             this.removeItemFromCart(id);
           }
@@ -112,14 +116,17 @@ export default class ShoppingCart {
         (item) => item.Id === id
       );
 
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
+    if (index < 0) {
+      return;
     }
 
-    setLocalStorage(
-      "so-cart",
-      this.cartItems
-    );
+    const removedItem = this.cartItems[index];
+    this.cartItems.splice(index, 1);
+
+    setLocalStorage("so-cart", this.cartItems);
+    updateCartCount();
+    document.querySelector("#cart-status").textContent =
+      `${removedItem.Name} was removed from your cart.`;
 
     this.renderCartContents();
   }
