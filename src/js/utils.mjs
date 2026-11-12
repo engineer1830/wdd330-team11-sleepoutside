@@ -43,9 +43,12 @@ export function renderListWithTemplate(
 }
 
 //sets the text to reflect the number of items in the cart
-export function updateCartCount(){
+export function updateCartCount() {
   const cart = getLocalStorage("so-cart") || [];
   const confirmation = document.querySelector(".cart-count");
+
+  if (!confirmation) return;
+
   confirmation.textContent = cart.length;
 }
 
@@ -66,8 +69,8 @@ export async function loadTemplate(path) {
 // There may be a issue finding the partials folder . . . if that is the case, try ./partials
 
 export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate("../partials/header.html");
-  const footerTemplate = await loadTemplate("../partials/footer.html");
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
 
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
@@ -77,4 +80,6 @@ export async function loadHeaderFooter() {
 
 }
 
-updateCartCount();
+
+
+// updateCartCount();
