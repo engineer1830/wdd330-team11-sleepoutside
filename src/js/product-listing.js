@@ -5,22 +5,35 @@ import { getParam, loadHeaderFooter, updateCartCount } from "./utils.mjs";
 loadHeaderFooter().then(updateCartCount);
 
 const category = getParam("category");
+const search = getParam("search");
 const dataSource = new ProductData();
 const listElement = document.querySelector(".product-list");
 const title = document.querySelector("#product-listing-title");
 
-if (!category) {
-  throw new Error("Product listing requires a category URL parameter.");
+if (!category && !search) {
+  throw new Error(
+    "Product listing requires a category or search URL parameter.",
+  );
 }
 
+const query = search || category;
 const categoryTitle = category
-  .split("-")
-  .map((word) => word[0].toUpperCase() + word.slice(1))
-  .join(" ");
+  ? category
+      .split("-")
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(" ")
+  : "";
 
-title.textContent = `Top Products: ${categoryTitle}`;
+title.textContent = search
+  ? `Search results for: ${search}`
+  : `Top Products: ${categoryTitle}`;
 
-const productList = new ProductList(category, dataSource, listElement);
+const productList = new ProductList(
+  query,
+  dataSource,
+  listElement,
+  Boolean(search),
+);
 
 productList.init();
 

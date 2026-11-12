@@ -36,15 +36,18 @@ function productCardTemplate(product) {
 
 export default class ProductList {
 
-  constructor(category, dataSource, listElement) {
-    this.category = category;
+  constructor(query, dataSource, listElement, isSearch = false) {
+    this.query = query;
     this.dataSource = dataSource;
     this.listElement = listElement;
     this.products = [];
+    this.isSearch = isSearch;
   }
 
   async init() {
-    this.products = await this.dataSource.getData(this.category);
+    this.products = this.isSearch
+      ? await this.dataSource.searchProducts(this.query)
+      : await this.dataSource.getData(this.query);
 
     // Render the initial unsorted list
     this.renderList(this.products);
@@ -66,6 +69,12 @@ export default class ProductList {
   renderList(list) {
     // Clear out current contents to prevent items from duplicating or stacking
     this.listElement.innerHTML = "";
+
+    if (list.length === 0) {
+      this.listElement.innerHTML =
+        "<li class=\"no-results\">No products found.</li>";
+      return;
+    }
 
     renderListWithTemplate(
       productCardTemplate,
