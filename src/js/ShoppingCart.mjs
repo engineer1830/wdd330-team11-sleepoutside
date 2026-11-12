@@ -1,11 +1,8 @@
 import {getLocalStorage, setLocalStorage, renderListWithTemplate,} from "./utils.mjs";
 
-const imageUrls = import.meta.glob("../images/tents/*", {
-  eager: true, import: "default", query: "?url",
-});
 
-function getCartImageUrl(imagePath) {
-  return imageUrls[imagePath] || imagePath;
+function getCartImageUrl(item) {
+  return item.Images?.PrimaryMedium || item.Image;
 }
 
 function cartItemTemplate(item) {
@@ -14,7 +11,7 @@ function cartItemTemplate(item) {
 
       <a href="#" class="cart-card__image">
         <img
-          src="${getCartImageUrl(item.Image)}"
+          src="${getCartImageUrl(item)}"
           alt="${item.Name}"
         />
       </a>
@@ -69,6 +66,8 @@ export default class ShoppingCart {
       true
     );
 
+    this.renderCartTotal();
+
     document
       .querySelectorAll(".remove-item")
       .forEach((button) => {
@@ -82,6 +81,29 @@ export default class ShoppingCart {
           }
         );
       });
+  }
+
+  renderCartTotal() {
+    const footer =
+      document.querySelector(".cart-footer");
+
+    if (!footer) return;
+
+    if (this.cartItems.length === 0) {
+      footer.classList.add("hide");
+      return;
+    }
+
+    const total = this.cartItems.reduce(
+      (sum, item) =>
+        sum + Number(item.FinalPrice),
+      0
+    );
+
+    document.querySelector(".cart-total").textContent =
+      `Total: $${total.toFixed(2)}`;
+
+    footer.classList.remove("hide");
   }
 
   removeItemFromCart(id) {
