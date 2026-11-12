@@ -127,6 +127,11 @@ button {
   text-align: center;
 }
 
+.cart a {
+  position: relative;
+  display: inline-block;
+}
+
 .cart svg {
   width: 25px;
 }
@@ -137,17 +142,23 @@ button {
 
 .cart-count {
   position: absolute;
-  top: 5px;
-  right: -5px;
+  top: -7px;
+  right: -8px;
   background-color: var(--primary-color);
   color: floralwhite;
   border-radius: 50%;
   width: 21px;
-  height: 20px;
+  height: 21px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.cart-count[hidden] {
+  display: none;
 }
 
 /* End cart icon styles */

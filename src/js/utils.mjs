@@ -42,14 +42,17 @@ export function renderListWithTemplate(
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
-//sets the text to reflect the number of items in the cart
+//sets the text to reflect the number of items in the cart(Ivan updated)
 export function updateCartCount() {
   const cart = getLocalStorage("so-cart") || [];
-  const confirmation = document.querySelector(".cart-count");
+  const countElement = document.querySelector(".cart-count");
 
-  if (!confirmation) return;
+  if (!countElement) return;
 
-  confirmation.textContent = cart.length;
+  const count = cart.length;
+
+  countElement.textContent = count > 0 ? count : "";
+  countElement.hidden = count === 0;
 }
 
 export function renderWithTemplate(template, parentElement, data, callback,) {
@@ -66,7 +69,7 @@ export async function loadTemplate(path) {
   return template;
 }
 
-// There may be a issue finding the partials folder . . . if that is the case, try ./partials
+// There may be a issue finding the partials folder . . . if that is the case, try ./partials (Ivan Updated)
 
 export async function loadHeaderFooter() {
   const headerTemplate = await loadTemplate("/partials/header.html");
@@ -75,9 +78,14 @@ export async function loadHeaderFooter() {
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
 
-  renderWithTemplate(headerTemplate, headerElement);
-  renderWithTemplate(footerTemplate, footerElement);
+  if (headerElement) {
+    renderWithTemplate(headerTemplate, headerElement);
+    updateCartCount();
+  }
 
+  if (footerElement) {
+    renderWithTemplate(footerTemplate, footerElement);
+  }
 }
 
 
