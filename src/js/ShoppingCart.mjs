@@ -30,10 +30,12 @@ function cartItemTemplate(item) {
       </p>
 
       <p class="cart-card__quantity">
-        qty: 1
+        qty: ${item.quantity}
       </p>
 
-      <p class="cart-card__price">$${item.FinalPrice}</p>
+      <p class="cart-card__price">$${(
+        Number(item.FinalPrice) * item.quantity
+      ).toFixed(2)}</p>
 
       <button
         type="button"
@@ -52,8 +54,10 @@ export default class ShoppingCart {
   constructor(listElement) {
     this.listElement = listElement;
 
-    this.cartItems =
-      getLocalStorage("so-cart") || [];
+    this.cartItems = (getLocalStorage("so-cart") || []).map((item) => ({
+      ...item,
+      quantity: Number(item.quantity) || 1,
+    }));
   }
 
   init() {
@@ -100,7 +104,7 @@ export default class ShoppingCart {
 
     const total = this.cartItems.reduce(
       (sum, item) =>
-        sum + Number(item.FinalPrice),
+        sum + Number(item.FinalPrice) * item.quantity,
       0
     );
 

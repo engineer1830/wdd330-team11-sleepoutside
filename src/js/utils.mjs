@@ -49,7 +49,10 @@ export function updateCartCount() {
 
   if (!confirmation) return;
 
-  confirmation.textContent = cart.length;
+  confirmation.textContent = cart.reduce(
+    (total, item) => total + (Number(item.quantity) || 1),
+    0,
+  );
 }
 
 export function renderWithTemplate(template, parentElement, data, callback,) {

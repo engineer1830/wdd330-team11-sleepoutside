@@ -29,7 +29,20 @@ export default class ProductDetails {
 
     addProductToCart() {
         const cartContents = getLocalStorage("so-cart") || [];
-        cartContents.push(this.product);
+        const existingItem = cartContents.find(
+            (item) => item.Id === this.product.Id,
+        );
+
+        if (existingItem) {
+            existingItem.quantity = Number(existingItem.quantity) || 1;
+            existingItem.quantity += 1;
+        } else {
+            cartContents.push({
+                ...this.product,
+                quantity: 1,
+            });
+        }
+
         setLocalStorage("so-cart", cartContents);
         updateCartCount();
 
