@@ -30,7 +30,28 @@ function cartItemTemplate(item) {
       </p>
 
       <p class="cart-card__quantity">
-        qty: ${item.quantity}
+        <span>qty: ${item.quantity}</span>
+        <span class="cart-card__quantity-controls">
+          <button
+            type="button"
+            class="cart-card_quantity-button"
+            data-action="decrease"
+            data-id="${item.Id}"
+            aria-label="Decrease quantity of ${item.Name}"
+            ${item.quantity === 1 ? "disabled" : ""}
+          >
+            −
+          </button>
+          <button
+            type="button"
+            class="cart-card_quantity-button"
+            data-action="increase"
+            data-id="${item.Id}"
+            aria-label="Increase quantity of ${item.Name}"
+          >
+            +
+          </button>
+        </span>
       </p>
 
       <p class="cart-card__price">$${(
@@ -58,6 +79,7 @@ export default class ShoppingCart {
       ...item,
       quantity: Number(item.quantity) || 1,
     }));
+    this.statusTimeout = null;
   }
 
   init() {
@@ -88,6 +110,18 @@ export default class ShoppingCart {
             this.removeItemFromCart(id);
           }
         );
+      });
+
+    document
+      .querySelectorAll(".cart-card_quantity-button")
+      .forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const target = event.currentTarget;
+          const id = target.dataset.id;
+          const amount = target.dataset.action === "increase" ? 1 : -1;
+
+          this.updateItemQuantity(id, amount);
+        });
       });
   }
 
@@ -129,9 +163,44 @@ export default class ShoppingCart {
 
     setLocalStorage("so-cart", this.cartItems);
     updateCartCount();
-    document.querySelector("#cart-status").textContent =
-      `${removedItem.Name} was removed from your cart.`;
+    this.showStatus(`${removedItem.Name} was removed from your cart.`);
 
     this.renderCartContents();
+  }
+
+  updateItemQuantity(id, amount) {
+    const item = this.cartItems.find((cartItem) => cartItem.Id === id);
+
+    if (!item) {
+      return;
+    }
+
+    const nextQuantity = item.quantity + amount;
+
+    if (nextQuantity < 1) {
+      return;
+    }
+
+    item.quantity = nextQuantity;
+    setLocalStorage("so-cart", this.cartItems);
+    updateCartCount();
+    this.renderCartContents();
+  }
+
+  showStatus(message) {
+    const status = document.querySelector("#cart-status");
+
+    if (!status) {
+      return;
+    }
+
+    clearTimeout(this.statusTimeout);
+    status.textContent = message;
+    status.classList.add("is-visible");
+
+    this.statusTimeout = setTimeout(() => {
+      status.textContent = "";
+      status.classList.remove("is-visible");
+    }, 3500);
   }
 }
