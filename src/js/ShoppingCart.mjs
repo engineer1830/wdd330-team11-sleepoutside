@@ -21,16 +21,18 @@ function cartItemTemplate(item) {
         />
       </a>
 
-      <a href="#">
-        <h2 class="card__name">${item.Name}</h2>
-      </a>
+      <div class="cart-card__details">
+        <a href="#">
+          <h2 class="card__name">${item.Name}</h2>
+        </a>
 
-      <p class="cart-card__color">
-        ${item.Colors[0].ColorName}
-      </p>
+        <p class="cart-card__color">
+          ${item.Colors[0].ColorName}
+        </p>
+      </div>
 
-      <p class="cart-card__quantity">
-        <span>qty: ${item.quantity}</span>
+      <div class="cart-card__quantity">
+        <span>Qty: ${item.quantity}</span>
         <span class="cart-card__quantity-controls">
           <button
             type="button"
@@ -52,20 +54,22 @@ function cartItemTemplate(item) {
             +
           </button>
         </span>
-      </p>
+      </div>
 
-      <p class="cart-card__price">$${(
-        Number(item.FinalPrice) * item.quantity
-      ).toFixed(2)}</p>
+      <div class="cart-card__actions">
+        <p class="cart-card__price">$${(
+          Number(item.FinalPrice) * item.quantity
+        ).toFixed(2)}</p>
 
-      <button
-        type="button"
-        class="cart-card_remove"
-        data-id="${item.Id}"
-        aria-label="Remove ${item.Name} from cart"
-      >
-        Remove
-      </button>
+        <button
+          type="button"
+          class="cart-card_remove"
+          data-id="${item.Id}"
+          aria-label="Remove ${item.Name} from cart"
+        >
+          Remove
+        </button>
+      </div>
 
     </li>
   `;
