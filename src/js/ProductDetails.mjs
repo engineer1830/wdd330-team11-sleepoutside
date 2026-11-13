@@ -17,6 +17,15 @@ export default class ProductDetails {
         this.renderProductDetails();
         // once the HTML is rendered, add a listener to the Add to Cart button
         // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
+        
+        const breadcrumb =
+            document.querySelector("#breadcrumb");
+
+        if (breadcrumb) {
+            breadcrumb.innerHTML =
+                `<a href="/index.html">Home</a> → ${this.product.NameWithoutBrand}`;
+        }
+        
         const addButton = document.getElementById("addToCart");
 
         this.addButtonText = addButton.textContent.trim();
