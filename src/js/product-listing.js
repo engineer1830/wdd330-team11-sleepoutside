@@ -28,6 +28,10 @@ title.textContent = search
   ? `Search results for: ${search}`
   : `Top Products: ${categoryTitle}`;
 
+document.querySelector("#breadcrumb").innerHTML = search
+  ? `<a href="/index.html">Home</a> → Search: ${search}`
+  : `<a href="/index.html">Home</a> → ${categoryTitle}`;
+
 const productList = new ProductList(
   query,
   dataSource,
