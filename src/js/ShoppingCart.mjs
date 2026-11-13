@@ -1,4 +1,9 @@
-import {getLocalStorage, setLocalStorage, renderListWithTemplate,} from "./utils.mjs";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  renderListWithTemplate,
+  updateCartCount,
+} from "./utils.mjs";
 
 
 function getCartImageUrl(item) {
@@ -120,6 +125,8 @@ export default class ShoppingCart {
       "so-cart",
       this.cartItems
     );
+
+    updateCartCount();
 
     this.renderCartContents();
   }
