@@ -49,7 +49,10 @@ export function updateCartCount() {
 
   if (!countElement) return;
 
-  const count = cart.length;
+  const count = cart.reduce(
+    (total, item) => total + (Number(item.quantity) || 1),
+    0,
+  );
 
   countElement.textContent = count > 0 ? count : "";
   countElement.hidden = count === 0;

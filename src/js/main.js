@@ -1,3 +1,5 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, updateCartCount } from "./utils.mjs";
+import Alert from "./Alert.js";
 
-loadHeaderFooter();
+loadHeaderFooter().then(updateCartCount);
+new Alert().init();
