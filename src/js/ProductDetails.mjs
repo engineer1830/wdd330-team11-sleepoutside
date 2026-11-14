@@ -69,11 +69,14 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-    const discount = (
+   
+    const isDiscounted = product.FinalPrice < product.SuggestedRetailPrice; 
+
+    const discount = Math.round(
         ((product.SuggestedRetailPrice - product.FinalPrice) /
             product.SuggestedRetailPrice) *
         100
-    ).toFixed(2);
+    );
 
     document.querySelector("h2").textContent = product.Brand.Name;
     document.querySelector("h3").textContent = product.NameWithoutBrand;
@@ -91,7 +94,9 @@ function productDetailsTemplate(product) {
 
     document.getElementById("productPrice").innerHTML = `MSRP $${product.SuggestedRetailPrice.toFixed(2)}`;
 
-    document.getElementById("productDiscount").innerHTML = `${discount}% Discount`;
+    document.getElementById("productDiscount").innerHTML =  isDiscounted
+        ? `<span class="discount-badge">${discount}% OFF</span>`
+        : "";
 
     document.getElementById("productDiscountPrice").innerHTML = `Our Price $${product.FinalPrice.toFixed(2)}`;
 
