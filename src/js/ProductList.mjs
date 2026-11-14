@@ -10,10 +10,16 @@ function productCardTemplate(product) {
       )
     : 0;
 
+  const images = product.Images || {};
+  const imageSrc = images.PrimaryMedium || product.Image;
+  const imageSrcset = images.PrimarySmall
+    ? `srcset="${images.PrimarySmall} 80w, ${images.PrimaryMedium} 160w, ${images.PrimaryLarge} 320w" sizes="(max-width: 500px) 160px, 320px"`
+    : "";
+
   return `
       <li class="product-card">
         <a href="../product_pages/index.html?product=${product.Id}">
-          <img src="${product.Images.PrimaryMedium}" alt="${product.NameWithoutBrand}">
+          <img ${imageSrcset} src="${imageSrc}" alt="${product.NameWithoutBrand}">
           <h3 class="card__brand"> ${product.Brand.Name} </h3>
           <h2 class="card__name"> ${product.NameWithoutBrand} </h2>
           <p class="product-card__price">

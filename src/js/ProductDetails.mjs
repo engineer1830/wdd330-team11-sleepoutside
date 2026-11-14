@@ -87,7 +87,13 @@ function productDetailsTemplate(product) {
         productImage.classList.remove("product-image--loading");
         productImage.alt = `${product.NameWithoutBrand} image unavailable`;
     };
-    productImage.src = product.Images.PrimaryLarge;
+    if (product.Images) {
+        productImage.srcset = `${product.Images.PrimaryMedium} 160w, ${product.Images.PrimaryLarge} 320w, ${product.Images.PrimaryExtraLarge} 600w`;
+        productImage.sizes = "(max-width: 600px) 90vw, 600px";
+        productImage.src = product.Images.PrimaryLarge;
+    } else {
+        productImage.src = product.Image;
+    }
 
     document.getElementById("productPrice").innerHTML = `MSRP $${product.SuggestedRetailPrice.toFixed(2)}`;
 
