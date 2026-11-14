@@ -443,6 +443,23 @@ button {
   align-items: center;
 }
 
+.breadcrumb {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 1rem auto;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.breadcrumb a {
+  color: #666;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
