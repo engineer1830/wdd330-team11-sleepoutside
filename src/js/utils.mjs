@@ -91,6 +91,33 @@ export async function loadHeaderFooter() {
   }
 }
 
+// show a dismissible message at the top of <main>
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector("main");
 
+  if (!main) return;
+
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.setAttribute("role", "alert");
+
+  const text = document.createElement("p");
+  text.textContent = message;
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.classList.add("alert-close");
+  closeButton.setAttribute("aria-label", "Dismiss message");
+  closeButton.textContent = "\u00d7";
+  closeButton.addEventListener("click", () => alert.remove());
+
+  alert.append(text, closeButton);
+  main.prepend(alert);
+
+  // make sure the user sees it; callers can pass false to skip
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}
 
 // updateCartCount();

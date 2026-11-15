@@ -552,3 +552,38 @@ footer {
   outline: 3px solid var(--tertiary-color);
   outline-offset: 3px;
 }
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #b3261e;
+  border-radius: 0.25rem;
+  background-color: #fdecea;
+  color: #5f1410;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.alert-close {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 0.5rem;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid #5f1410;
+    outline-offset: 2px;
+  }
+}
