@@ -92,14 +92,15 @@ export async function loadHeaderFooter() {
 }
 
 // show a dismissible message at the top of <main>
-export function alertMessage(message, scroll = true) {
+// type: "error" (default, red) or "success" (green)
+export function alertMessage(message, scroll = true, type = "error") {
   const main = document.querySelector("main");
 
-  if (!main) return;
+  if (!main) return null;
 
   const alert = document.createElement("div");
-  alert.classList.add("alert");
-  alert.setAttribute("role", "alert");
+  alert.classList.add("alert", `alert-${type}`);
+  alert.setAttribute("role", type === "error" ? "alert" : "status");
 
   const text = document.createElement("p");
   text.textContent = message;
@@ -118,6 +119,8 @@ export function alertMessage(message, scroll = true) {
   if (scroll) {
     window.scrollTo(0, 0);
   }
+
+  return alert;
 }
 
 // updateCartCount();
