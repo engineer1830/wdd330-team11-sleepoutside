@@ -91,6 +91,31 @@ export async function loadHeaderFooter() {
   }
 }
 
+export function alertMessage(message, scroll = true) {
 
+  // create alert container
+  const alert = document.createElement("div");
 
-// updateCartCount();
+  alert.classList.add("alert");
+
+  alert.innerHTML = `
+    <span>${message}</span>
+    <button class="alert-close">X</button>
+  `;
+
+  const main = document.querySelector("main");
+
+  alert.addEventListener("click", (e) => {
+
+    if (e.target.classList.contains("alert-close")) {
+      main.removeChild(alert);
+    }
+
+  });
+
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}

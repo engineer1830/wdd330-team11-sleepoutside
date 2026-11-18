@@ -53,6 +53,29 @@ p {
   text-align: center;
 }
 
+.alert
+{
+  background-color: #ffe0e0;
+  border: 1px solid #cc0000;
+  color: #660000;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 4px;
+}
+
+.alert-close
+{
+  border: none;
+  background: transparent;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .logo {
   line-height: 60px;
   width: 245px;
