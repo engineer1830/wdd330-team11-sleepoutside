@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { getParam, loadHeaderFooter, updateCartCount } from "./utils.mjs";
 
@@ -6,7 +6,7 @@ loadHeaderFooter().then(updateCartCount);
 
 const category = getParam("category");
 const search = getParam("search");
-const dataSource = new ProductData();
+const dataSource = new ExternalServices();
 const listElement = document.querySelector(".product-list");
 const title = document.querySelector("#product-listing-title");
 
@@ -19,9 +19,9 @@ if (!category && !search) {
 const query = search || category;
 const categoryTitle = category
   ? category
-      .split("-")
-      .map((word) => word[0].toUpperCase() + word.slice(1))
-      .join(" ")
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ")
   : "";
 
 title.textContent = search
