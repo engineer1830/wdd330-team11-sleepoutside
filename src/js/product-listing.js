@@ -19,9 +19,9 @@ if (!category && !search) {
 const query = search || category;
 const categoryTitle = category
   ? category
-    .split("-")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ")
+      .split("-")
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(" ")
   : "";
 
 title.textContent = search

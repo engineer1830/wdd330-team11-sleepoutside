@@ -57,16 +57,28 @@ export default class CheckoutProcess {
     }
 
     async checkout(form) {
+    try {
         const order = formDataToJSON(form);
+
+        // Remove formatting before sending data to the backend
+        order.cardNumber = order.cardNumber.replace(/\s/g, "");
+        order.expiration = order.expiration.replace("/", "");
+
         order.orderDate = new Date().toISOString();
         order.orderTotal = this.orderTotal.toFixed(2);
         order.tax = this.tax.toFixed(2);
         order.shipping = this.shipping;
         order.items = packageItems(this.list);
 
+        await new ExternalServices().checkout(order);
 
-        const response = await new ExternalServices().checkout(order);
-        console.log(response);
+        localStorage.removeItem(this.key);
+
+        window.location.href = "/checkout/success.html";
+
+    } catch (error) {
+        alert("Something went wrong while processing your order. Please try again.");
     }
+}
 
 }

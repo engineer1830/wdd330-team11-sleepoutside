@@ -1,0 +1,89 @@
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page-bg: #171a21;
+  --surface-bg: #222733;
+  --text-color: #e8eaf0;
+  --muted-text: #aab2c0;
+  --border-color: #414957;
+  --input-bg: #292f3b;
+  --input-text: #f1f3f7;
+}
+
+html,
+body {
+  background-color: var(--page-bg);
+  color: var(--text-color);
+}
+
+body,
+header,
+main,
+footer {
+  color: var(--text-color);
+  background-color: var(--page-bg);
+}
+
+h1,
+h2,
+h3,
+p,
+label {
+  color: var(--text-color);
+}
+
+.product-card,
+.cart-card,
+.product-detail,
+.checkout-section,
+.checkout-summary {
+  background-color: var(--surface-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.product-list a,
+.category-list a,
+.logo a {
+  color: var(--text-color);
+}
+
+.breadcrumb,
+.breadcrumb a {
+  color: var(--muted-text);
+}
+
+input,
+textarea,
+select {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--border-color);
+}
+
+input::placeholder {
+  color: var(--muted-text);
+}
+
+:root[data-theme="dark"] .mission {
+  background-color: #0e1118;
+  color: #e8eaf0;
+}
+
+:root[data-theme="dark"] .mission p {
+  color: #e8eaf0;
+}
+
+:root[data-theme="dark"] .cart-count {
+  color: #171a21;
+}
+
+:root[data-theme="dark"] #cart-status {
+  background-color: #3a2023;
+  color: #ffb4ab;
+  border-color: #a94747;
+}
