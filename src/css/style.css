@@ -460,6 +460,29 @@ button {
   text-decoration: underline;
 }
 
+.cart-bump
+{
+  animation: cart-bump 0.4s ease;
+}
+
+@keyframes cart-bump
+{
+  0%
+  {
+    transform: scale(1);
+  }
+
+  50%
+  {
+    transform: scale(1.5);
+  }
+
+  100%
+  {
+    transform: scale(1);
+  }
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
