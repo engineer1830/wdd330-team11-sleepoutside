@@ -1,3 +1,5 @@
+import { initTheme } from "./theme.js";
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -72,9 +74,11 @@ export async function loadTemplate(path) {
   return template;
 }
 
-// There may be a issue finding the partials folder . . . if that is the case, try ./partials (Ivan Updated)
 
 export async function loadHeaderFooter() {
+  // Apply the saved theme before loading the page header.
+  initTheme();
+
   const headerTemplate = await loadTemplate("/partials/header.html");
   const footerTemplate = await loadTemplate("/partials/footer.html");
 
@@ -84,13 +88,10 @@ export async function loadHeaderFooter() {
   if (headerElement) {
     renderWithTemplate(headerTemplate, headerElement);
     updateCartCount();
+    initTheme();
   }
 
   if (footerElement) {
     renderWithTemplate(footerTemplate, footerElement);
   }
 }
-
-
-
-// updateCartCount();

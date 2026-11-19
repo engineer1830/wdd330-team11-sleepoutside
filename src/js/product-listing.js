@@ -19,9 +19,9 @@ if (!category && !search) {
 const query = search || category;
 const categoryTitle = category
   ? category
-    .split("-")
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ")
+      .split("-")
+      .map((word) => word[0].toUpperCase() + word.slice(1))
+      .join(" ")
   : "";
 
 title.textContent = search
@@ -48,4 +48,61 @@ document.querySelector("#sort-by-name").addEventListener("click", () => {
 
 document.querySelector("#sort-by-price").addEventListener("click", () => {
   productList.sortList("price");
+});
+
+// Quick View functionality
+const quickViewModal = document.querySelector("#quick-view-modal");
+const quickViewContent = document.querySelector("#quick-view-content");
+const closeQuickView = document.querySelector(".quick-view-close");
+
+listElement.addEventListener("click", (event) => {
+  const button = event.target.closest(".quick-view-button");
+
+  if (!button) return;
+
+  const productId = button.dataset.productId;
+
+  const selectedProduct = productList.products.find(
+    (product) => String(product.Id) === String(productId),
+  );
+
+  if (!selectedProduct) return;
+
+  quickViewContent.innerHTML = `
+    <h2>${selectedProduct.Brand.Name}</h2>
+    <h3>${selectedProduct.NameWithoutBrand}</h3>
+    <img
+      src="${selectedProduct.Images?.PrimaryLarge || selectedProduct.Image}"
+      alt="${selectedProduct.NameWithoutBrand}"
+    >
+    <p>Price: $${selectedProduct.FinalPrice.toFixed(2)}</p>
+    <p>${selectedProduct.DescriptionHtmlSimple || ""}</p>
+  `;
+
+  quickViewModal.showModal();
+});
+
+closeQuickView.addEventListener("click", () => {
+  quickViewModal.close();
+});
+
+quickViewModal.addEventListener("click", (event) => {
+  if (event.target === quickViewModal) {
+    quickViewModal.close();
+  }
+});
+
+// Add to Cart functionality
+listElement.addEventListener("click", (event) => {
+  const button = event.target.closest(".add-to-cart-button");
+
+  if (!button) return;
+
+  productList.addProductToCart(button.dataset.productId);
+
+  button.textContent = "Added!";
+
+  setTimeout(() => {
+    button.textContent = "Add to Cart";
+  }, 1500);
 });
