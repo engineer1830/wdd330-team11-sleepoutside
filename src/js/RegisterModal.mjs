@@ -139,6 +139,7 @@ function openRegisterModal() {
 
 // Shows the register modal once to first-time visitors.
 export function initRegisterPrompt() {
+  if (new Date() >= new Date(DRAW_DATE)) return;
   if (getLocalStorage(SEEN_KEY) || getLocalStorage(USER_KEY)) return;
   setTimeout(openRegisterModal, 1000);
 }
