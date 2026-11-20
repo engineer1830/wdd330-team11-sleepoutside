@@ -61,6 +61,15 @@ export default class ProductDetails {
         setLocalStorage("so-cart", cartContents);
         updateCartCount();
 
+        const cartIcon =
+            document.querySelector(".cart");
+
+        cartIcon.classList.add("cart-bump");
+
+        setTimeout(() => {
+            cartIcon.classList.remove("cart-bump");
+        }, 400);
+
         const button = document.getElementById("addToCart");
 
         clearTimeout(this.cartFeedbackTimeout);

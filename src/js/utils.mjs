@@ -1,3 +1,5 @@
+import { initTheme } from "./theme.js";
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -7,10 +9,12 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -33,7 +37,7 @@ export function renderListWithTemplate(
   parentElement,
   list,
   position = "afterbegin",
-  clear = false
+  clear = false,
 ) {
   if (clear) {
     parentElement.innerHTML = "";
@@ -46,21 +50,17 @@ export function renderListWithTemplate(
 export function updateCartCount() {
   const cart = getLocalStorage("so-cart") || [];
   const countElement = document.querySelector(".cart-count");
-
   if (!countElement) return;
-
   const count = cart.reduce(
     (total, item) => total + (Number(item.quantity) || 1),
     0,
   );
-
   countElement.textContent = count > 0 ? count : "";
   countElement.hidden = count === 0;
 }
 
-export function renderWithTemplate(template, parentElement, data, callback,) {
+export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.innerHTML = template;
-
   if (callback) {
     callback(data);
   }
@@ -72,9 +72,10 @@ export async function loadTemplate(path) {
   return template;
 }
 
-// There may be a issue finding the partials folder . . . if that is the case, try ./partials (Ivan Updated)
-
 export async function loadHeaderFooter() {
+  // Apply the saved theme before loading the page header.
+  initTheme();
+
   const headerTemplate = await loadTemplate("/partials/header.html");
   const footerTemplate = await loadTemplate("/partials/footer.html");
 
@@ -84,6 +85,7 @@ export async function loadHeaderFooter() {
   if (headerElement) {
     renderWithTemplate(headerTemplate, headerElement);
     updateCartCount();
+    initTheme();
   }
 
   if (footerElement) {
@@ -95,7 +97,6 @@ export async function loadHeaderFooter() {
 // type: "error" (default, red) or "success" (green)
 export function alertMessage(message, scroll = true, type = "error") {
   const main = document.querySelector("main");
-
   if (!main) return null;
 
   const alert = document.createElement("div");
@@ -122,5 +123,3 @@ export function alertMessage(message, scroll = true, type = "error") {
 
   return alert;
 }
-
-// updateCartCount();

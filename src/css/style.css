@@ -1,3 +1,6 @@
+@import "./theme.css";
+@import "./checkout.css";
+
 :root {
   --font-body: Arial, Helvetica, sans-serif;
   --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -12,6 +15,15 @@
   --font-base: 18px;
   --small-font: 0.8em;
   --large-font: 1.2em;
+
+  /* Light theme */
+  --page-bg: #ffffff;
+  --surface-bg: #f5f5f5;
+  --text-color: #303030;
+  --muted-text: #666666;
+  --border-color: #d0d0d0;
+  --input-bg: #ffffff;
+  --input-text: #303030;
 }
 
 * {
@@ -460,6 +472,24 @@ button {
   text-decoration: underline;
 }
 
+.cart-bump {
+  animation: cart-bump 0.4s ease;
+}
+
+@keyframes cart-bump {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
@@ -577,57 +607,103 @@ footer {
   }
 }
 
-/* Checkout form */
-#checkout-form {
-  display: grid;
-  gap: 0.5rem;
-  max-width: 500px;
-  margin: 1rem 0;
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  margin: auto 0;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background-color: var(--surface-bg);
+  color: var(--text-color);
+  cursor: pointer;
+}
 
-  label {
-    margin-top: 0.5rem;
-    font-weight: bold;
-  }
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-  input {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid var(--dark-grey);
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 1rem;
+.theme-toggle:hover {
+  opacity: 0.75;
+}
 
-    &:focus-visible {
-      outline: 3px solid var(--tertiary-color);
-      outline-offset: 2px;
-    }
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+}
 
-    /* Only flags a field after the user has interacted with it */
-    &:user-invalid {
-      border-color: #b3261e;
-      background-color: #fdecea;
-    }
-  }
+/* Quick View Modal */
+.quick-view-modal {
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  padding: 2rem;
+  border: none;
+  border-radius: 8px;
+  overflow-y: auto;
+  margin: auto;
+}
 
-  p {
-    margin: 0;
-    padding: 0.25rem 0;
-  }
+.quick-view-modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
 
-  p:first-of-type {
-    margin-top: 1rem;
-    border-top: 2px solid var(--primary-color);
-    padding-top: 1rem;
-  }
+.quick-view-close {
+  display: block;
+  margin-left: auto;
+  border: none;
+  background: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
-  p:last-of-type {
-    font-size: var(--large-font);
-    font-weight: bold;
-  }
+#quick-view-content {
+  text-align: center;
+}
 
-  button {
-    width: 100%;
-    margin-top: 1rem;
-    padding: 0.75rem;
-  }
+#quick-view-content img {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  max-height: 300px;
+  object-fit: contain;
+  margin: 1rem auto;
+}
+
+/* Product card action buttons */
+.product-card__actions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.product-card__actions button {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.quick-view-button {
+  background-color: white;
+  border: 1px solid #333;
+  color: #333;
+}
+
+.add-to-cart-button {
+  background-color: #333;
+  border: 1px solid #333;
+  color: white;
 }
