@@ -707,3 +707,141 @@ footer {
   border: 1px solid #333;
   color: white;
 }
+
+/* Register call to action */
+.register-modal {
+  width: min(92vw, 520px);
+  max-height: 90vh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow-y: auto;
+  background-color: var(--surface-bg);
+  color: var(--text-color);
+
+  &[open] {
+    animation: modal-in 0.25s ease;
+  }
+}
+
+.register-modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.register-modal__content {
+  padding: 1.5rem;
+
+  p {
+    padding: 0;
+    margin-top: 0.5rem;
+  }
+
+  h2 {
+    margin-top: 0.25rem;
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  ul,
+  ol {
+    margin-top: 0.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .register-modal__eyebrow {
+    margin-top: 0;
+    color: var(--tertiary-color);
+    font-size: var(--small-font);
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .register-fineprint {
+    margin-top: 1rem;
+    color: var(--muted-text);
+    font-size: var(--small-font);
+  }
+}
+
+:root[data-theme="dark"] .register-modal__eyebrow {
+  color: var(--primary-color);
+}
+
+.register-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.register-modal__close {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 0.5rem;
+  background: none;
+  color: inherit;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.register-form {
+  label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+}
+
+.register-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+
+  button {
+    margin: 0;
+  }
+}
+
+.register-decline {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.register-done button {
+  margin: 1rem 0 0;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-modal[open] {
+    animation: none;
+  }
+}
