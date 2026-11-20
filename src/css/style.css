@@ -472,25 +472,20 @@ button {
   text-decoration: underline;
 }
 
-.cart-bump
-{
+.cart-bump {
   animation: cart-bump 0.4s ease;
 }
 
-@keyframes cart-bump
-{
-  0%
-  {
+@keyframes cart-bump {
+  0% {
     transform: scale(1);
   }
 
-  50%
-  {
+  50% {
     transform: scale(1.5);
   }
 
-  100%
-  {
+  100% {
     transform: scale(1);
   }
 }
@@ -545,27 +540,6 @@ footer {
   font-weight: bold;
 }
 
-#cart-confirmation {
-  color: var(--secondary-color);
-  font-weight: bold;
-  text-align: center;
-  margin-top: 1em;
-  min-height: 1.5em;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-5px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    visibility 0.3s ease;
-}
-
-#cart-confirmation.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
 #cart-status {
   display: none;
   margin: 0 auto 0.75rem;
@@ -586,6 +560,51 @@ footer {
 #addToCart:focus-visible {
   outline: 3px solid var(--tertiary-color);
   outline-offset: 3px;
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #b3261e;
+  border-radius: 0.25rem;
+  background-color: #fdecea;
+  color: #5f1410;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.alert-close {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 0.5rem;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid #5f1410;
+    outline-offset: 2px;
+  }
+}
+
+.alert-success {
+  border-color: #1b5e20;
+  background-color: #e8f5e9;
+  color: #0d3b12;
+
+  .alert-close:focus-visible {
+    outline-color: #0d3b12;
+  }
 }
 
 .theme-toggle {

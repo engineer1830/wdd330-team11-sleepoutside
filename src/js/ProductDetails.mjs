@@ -1,4 +1,9 @@
-import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
+import {
+    getLocalStorage,
+    setLocalStorage,
+    updateCartCount,
+    alertMessage,
+} from "./utils.mjs";
 
 export default class ProductDetails {
 
@@ -8,6 +13,7 @@ export default class ProductDetails {
         this.dataSource = dataSource;
         this.addButtonText = "";
         this.cartFeedbackTimeout = null;
+        this.cartAlert = null;
     }
 
     async init() {
@@ -16,14 +22,14 @@ export default class ProductDetails {
         // the product details are needed before rendering the HTML
         this.renderProductDetails();
         // once the HTML is rendered, add a listener to the Add to Cart button
-        // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
+        // Notice the .bind(this). This callback will not work if the bind(this) ismissing. Review the readings from this week on 'this' to understand why.
         
         const breadcrumb =
             document.querySelector("#breadcrumb");
 
         if (breadcrumb) {
             breadcrumb.innerHTML =
-                `<a href="/index.html">Home</a> → ${this.product.NameWithoutBrand}`;
+                `<a href="/index.html">Home</a> &rarr; ${this.product.NameWithoutBrand}`;
         }
         
         const addButton = document.getElementById("addToCart");
@@ -65,19 +71,27 @@ export default class ProductDetails {
         }, 400);
 
         const button = document.getElementById("addToCart");
-        const confirmation = document.querySelector("#cart-confirmation");
 
         clearTimeout(this.cartFeedbackTimeout);
 
-        button.textContent = "In the Cart";
-        confirmation.textContent =
-            `${this.product.NameWithoutBrand} added to your cart!`;
+        // replace the previous alert instead of stacking them
+        if (this.cartAlert) {
+            this.cartAlert.remove();
+        }
 
-        confirmation.classList.add("is-visible");
+        button.textContent = "In the Cart";
+        this.cartAlert = alertMessage(
+            `${this.product.NameWithoutBrand} added to your cart!`,
+            true,
+            "success",
+        );
 
         this.cartFeedbackTimeout = setTimeout(() => {
             button.textContent = this.addButtonText;
-            confirmation.classList.remove("is-visible");
+
+            if (this.cartAlert) {
+                this.cartAlert.remove();
+            }
         }, 3000);
     }
 
@@ -123,7 +137,6 @@ function productDetailsTemplate(product) {
         : "";
 
     document.getElementById("productDiscountPrice").innerHTML = `Our Price $${product.FinalPrice.toFixed(2)}`;
-
     document.getElementById("productColor").textContent =
         product.Colors[0].ColorName;
     document.getElementById("productDesc").innerHTML =
