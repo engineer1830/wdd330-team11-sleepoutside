@@ -576,3 +576,58 @@ footer {
     outline-color: #0d3b12;
   }
 }
+
+/* Checkout form */
+#checkout-form {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 500px;
+  margin: 1rem 0;
+
+  label {
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--dark-grey);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+
+    &:focus-visible {
+      outline: 3px solid var(--tertiary-color);
+      outline-offset: 2px;
+    }
+
+    /* Only flags a field after the user has interacted with it */
+    &:user-invalid {
+      border-color: #b3261e;
+      background-color: #fdecea;
+    }
+  }
+
+  p {
+    margin: 0;
+    padding: 0.25rem 0;
+  }
+
+  p:first-of-type {
+    margin-top: 1rem;
+    border-top: 2px solid var(--primary-color);
+    padding-top: 1rem;
+  }
+
+  p:last-of-type {
+    font-size: var(--large-font);
+    font-weight: bold;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+  }
+}

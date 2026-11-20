@@ -1,12 +1,16 @@
 const baseURL = import.meta.env.VITE_SERVER_URL;
 const categories = ["tents", "backpacks", "sleeping-bags", "hammocks"];
 
-function convertToJson(res) {
+async function convertToJson(res) {
   if (res.ok) {
     return res.json();
-  } else {
-    throw new Error(`Request failed: ${res.status} ${res.statusText}`);
   }
+  // The server sends details about what went wrong in a JSON body.
+  // If the body is not JSON (for example a gateway error), fall back to a plain message.
+  const message = await res
+    .json()
+    .catch(() => `Request failed: ${res.status} ${res.statusText}`);
+  throw { name: "servicesError", message };
 }
 
 export default class ExternalServices {
@@ -15,7 +19,7 @@ export default class ExternalServices {
       `${baseURL}products/search/${encodeURIComponent(query)}`,
     );
     const data = await convertToJson(response);
-    return Array.isArray(data.Result) ? data.Result : [];
+    return data.Result;
   }
 
   async searchProducts(query) {
@@ -49,7 +53,6 @@ export default class ExternalServices {
       },
       body: JSON.stringify(payload),
     };
-
     return await fetch(`${baseURL}checkout`, options).then(convertToJson);
   }
 }
