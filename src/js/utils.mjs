@@ -59,6 +59,16 @@ export function updateCartCount() {
   countElement.hidden = count === 0;
 }
 
+// shows how many products are on the wish list
+export function updateWishListCount() {
+  const items = getLocalStorage("so-wishlist") || [];
+  const countElement = document.querySelector(".wishlist-count");
+  if (!countElement) return;
+
+  countElement.textContent = items.length > 0 ? items.length : "";
+  countElement.hidden = items.length === 0;
+}
+
 export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.innerHTML = template;
   if (callback) {
@@ -85,6 +95,7 @@ export async function loadHeaderFooter() {
   if (headerElement) {
     renderWithTemplate(headerTemplate, headerElement);
     updateCartCount();
+    updateWishListCount();
     initTheme();
   }
 

@@ -707,3 +707,247 @@ footer {
   border: 1px solid #333;
   color: white;
 }
+
+/* Register call to action */
+.register-modal {
+  width: min(92vw, 520px);
+  max-height: 90vh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow-y: auto;
+  background-color: var(--surface-bg);
+  color: var(--text-color);
+
+  &[open] {
+    animation: modal-in 0.25s ease;
+  }
+}
+
+.register-modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.register-modal__content {
+  padding: 1.5rem;
+
+  p {
+    padding: 0;
+    margin-top: 0.5rem;
+  }
+
+  h2 {
+    margin-top: 0.25rem;
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  ul,
+  ol {
+    margin-top: 0.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .register-modal__eyebrow {
+    margin-top: 0;
+    color: var(--tertiary-color);
+    font-size: var(--small-font);
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .register-fineprint {
+    margin-top: 1rem;
+    color: var(--muted-text);
+    font-size: var(--small-font);
+  }
+}
+
+:root[data-theme="dark"] .register-modal__eyebrow {
+  color: var(--primary-color);
+}
+
+.register-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.register-modal__close {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0 0.5rem;
+  background: none;
+  color: inherit;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.register-form {
+  label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+}
+
+.register-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+
+  button {
+    margin: 0;
+  }
+}
+
+.register-decline {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.register-done button {
+  margin: 1rem 0 0;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-modal[open] {
+    animation: none;
+  }
+}
+
+/* Wish list */
+.wishlist {
+  padding-top: 1em;
+  position: relative;
+  text-align: center;
+
+  a {
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+  }
+
+  svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linejoin: round;
+  }
+
+  a:hover svg {
+    fill: var(--primary-color);
+  }
+}
+
+.wishlist-count {
+  position: absolute;
+  top: -7px;
+  right: -8px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: #171a21;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.wishlist-count[hidden] {
+  display: none;
+}
+
+.wishlist-button {
+  margin-top: 0.75rem;
+  background: transparent;
+  color: var(--text-color);
+  border: 2px solid var(--secondary-color);
+}
+
+.wishlist-button:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.wishlist-button:focus-visible {
+  outline: 3px solid var(--tertiary-color);
+  outline-offset: 3px;
+}
+
+.wishlist-move {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  color: white;
+}
+
+.wishlist-remove {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+/* Narrow screens: icons stay beside the logo, search drops to its own row */
+@media screen and (max-width: 700px) {
+  header {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  header > .logo {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    font-size: 24px;
+    line-height: 48px;
+  }
+  header > .logo img {
+    width: 48px;
+    height: 48px;
+  }
+  header .cart,
+  header .wishlist {
+    padding-top: 0;
+  }
+  header .product-search {
+    order: 1;
+    flex: 1 0 100%;
+    max-width: none;
+    margin: 0;
+  }
+}
