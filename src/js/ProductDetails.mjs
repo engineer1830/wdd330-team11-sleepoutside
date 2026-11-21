@@ -110,6 +110,8 @@ function productDetailsTemplate(product) {
   document.querySelector("h3").textContent = product.NameWithoutBrand;
 
   const productImage = document.getElementById("productImage");
+  if (!productImage) return;
+
   productImage.alt = product.NameWithoutBrand;
   productImage.onload = () => {
     productImage.classList.remove("product-image--loading");
@@ -124,6 +126,71 @@ function productDetailsTemplate(product) {
     productImage.src = product.Images.PrimaryLarge;
   } else {
     productImage.src = product.Image;
+  }
+
+  const existingCarousel = document.querySelector(".carousel-thumbnails");
+  if (existingCarousel) {
+    existingCarousel.remove();
+  }
+
+  const rawExtras = product.Images?.ExtraImages || product.ExtraImages;
+  const extraImages = Array.isArray(rawExtras) ? rawExtras : [];
+  if (extraImages.length > 0) {
+    const thumbnailsContainer = document.createElement("div");
+    thumbnailsContainer.className = "carousel-thumbnails";
+
+    const allImages = [
+      {
+        Src: product.Images?.PrimaryLarge || product.Image,
+        Title: product.NameWithoutBrand,
+        srcset: product.Images
+          ? `${product.Images.PrimaryMedium} 160w, ${product.Images.PrimaryLarge} 320w, ${product.Images.PrimaryExtraLarge} 600w`
+          : "",
+      },
+      ...extraImages.filter((img) => img && img.Src),
+    ];
+
+    allImages.forEach((imgObj, index) => {
+      const thumb = document.createElement("img");
+      thumb.src = imgObj.Src;
+      thumb.alt =
+        imgObj.Title || `${product.NameWithoutBrand} view ${index + 1}`;
+      thumb.className = "carousel-thumb";
+      thumb.tabIndex = 0;
+      thumb.setAttribute("role", "button");
+      thumb.setAttribute(
+        "aria-label",
+        `View image ${index + 1} of ${allImages.length}`,
+      );
+      if (index === 0) thumb.classList.add("active");
+
+      const selectImage = () => {
+        productImage.src = imgObj.Src;
+        productImage.alt =
+          imgObj.Title || `${product.NameWithoutBrand} view ${index + 1}`;
+        if (imgObj.srcset) {
+          productImage.srcset = imgObj.srcset;
+        } else {
+          productImage.removeAttribute("srcset");
+        }
+        thumbnailsContainer
+          .querySelectorAll(".carousel-thumb")
+          .forEach((t) => t.classList.remove("active"));
+        thumb.classList.add("active");
+      };
+
+      thumb.addEventListener("click", selectImage);
+      thumb.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          selectImage();
+        }
+      });
+
+      thumbnailsContainer.appendChild(thumb);
+    });
+
+    productImage.insertAdjacentElement("afterend", thumbnailsContainer);
   }
 
   document.getElementById("productPrice").innerHTML =
