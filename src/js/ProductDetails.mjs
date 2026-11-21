@@ -110,6 +110,8 @@ function productDetailsTemplate(product) {
   document.querySelector("h3").textContent = product.NameWithoutBrand;
 
   const productImage = document.getElementById("productImage");
+  if (!productImage) return;
+
   productImage.alt = product.NameWithoutBrand;
   productImage.onload = () => {
     productImage.classList.remove("product-image--loading");
@@ -131,7 +133,8 @@ function productDetailsTemplate(product) {
     existingCarousel.remove();
   }
 
-  const extraImages = product.Images?.ExtraImages || [];
+  const rawExtras = product.Images?.ExtraImages || product.ExtraImages;
+  const extraImages = Array.isArray(rawExtras) ? rawExtras : [];
   if (extraImages.length > 0) {
     const thumbnailsContainer = document.createElement("div");
     thumbnailsContainer.className = "carousel-thumbnails";
@@ -144,7 +147,7 @@ function productDetailsTemplate(product) {
           ? `${product.Images.PrimaryMedium} 160w, ${product.Images.PrimaryLarge} 320w, ${product.Images.PrimaryExtraLarge} 600w`
           : "",
       },
-      ...extraImages,
+      ...extraImages.filter((img) => img && img.Src),
     ];
 
     allImages.forEach((imgObj, index) => {
@@ -163,6 +166,8 @@ function productDetailsTemplate(product) {
 
       const selectImage = () => {
         productImage.src = imgObj.Src;
+        productImage.alt =
+          imgObj.Title || `${product.NameWithoutBrand} view ${index + 1}`;
         if (imgObj.srcset) {
           productImage.srcset = imgObj.srcset;
         } else {
