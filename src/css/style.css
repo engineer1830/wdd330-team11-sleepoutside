@@ -751,7 +751,8 @@ footer {
   gap: 0.5rem;
   margin: 2rem auto;
   max-width: 400px;
-  
+}
+
 /* Register call to action */
 .register-modal {
   width: min(92vw, 520px);
