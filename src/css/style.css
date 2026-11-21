@@ -149,7 +149,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -708,6 +708,14 @@ footer {
   color: white;
 }
 
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem auto;
+  max-width: 400px;
+  
 /* Register call to action */
 .register-modal {
   width: min(92vw, 520px);
