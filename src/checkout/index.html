@@ -130,6 +130,9 @@
                   type="text"
                   id="zip"
                   name="zip"
+                  inputmode="numeric"
+                  pattern="[0-9]{5}"
+                  title="Enter a 5-digit zip code"
                   autocomplete="postal-code"
                   required
                 />
@@ -139,7 +142,6 @@
 
           <div class="checkout-section">
             <h2>Payment Information</h2>
-
             <div class="checkout-grid">
               <div class="form-group full-width">
                 <label for="cardNumber">Card Number</label>
@@ -149,11 +151,12 @@
                   name="cardNumber"
                   maxlength="19"
                   inputmode="numeric"
+                  pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
+                  title="Enter the 16 digits of your card number"
                   autocomplete="cc-number"
                   required
                 />
               </div>
-
               <div class="form-group">
                 <label for="expiration">Expiration Date</label>
                 <input
@@ -163,11 +166,12 @@
                   placeholder="MM/YY"
                   maxlength="5"
                   inputmode="numeric"
+                  pattern="(0[1-9]|1[0-2])/[0-9]{2}"
+                  title="Enter the expiration as MM/YY, for example 08/29"
                   autocomplete="cc-exp"
                   required
                 />
               </div>
-
               <div class="form-group">
                 <label for="code">CVV</label>
                 <input
@@ -176,6 +180,8 @@
                   name="code"
                   maxlength="3"
                   inputmode="numeric"
+                  pattern="[0-9]{3}"
+                  title="Enter the 3-digit security code"
                   autocomplete="cc-csc"
                   required
                 />
