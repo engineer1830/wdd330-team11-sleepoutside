@@ -751,7 +751,8 @@ footer {
   gap: 0.5rem;
   margin: 2rem auto;
   max-width: 400px;
-  
+}
+
 /* Register call to action */
 .register-modal {
   width: min(92vw, 520px);
@@ -973,21 +974,25 @@ footer {
     align-items: center;
     gap: 0.5rem;
   }
-  header > .logo {
+
+  header>.logo {
     flex: 1 1 0;
     min-width: 0;
     width: auto;
     font-size: 24px;
     line-height: 48px;
   }
-  header > .logo img {
+
+  header>.logo img {
     width: 48px;
     height: 48px;
   }
+
   header .cart,
   header .wishlist {
     padding-top: 0;
   }
+
   header .product-search {
     order: 1;
     flex: 1 0 100%;
