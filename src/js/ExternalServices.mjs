@@ -10,7 +10,7 @@ async function convertToJson(res) {
   const message = await res
     .json()
     .catch(() => `Request failed: ${res.status} ${res.statusText}`);
-  throw { name: "servicesError", message };
+  throw { name:"servicesError", message };
 }
 
 export default class ExternalServices {
