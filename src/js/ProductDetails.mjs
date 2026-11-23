@@ -208,6 +208,12 @@ function productDetailsTemplate(product) {
       `<img class="color-swatch" src="${color.ColorChipImageSrc}" alt="${color.ColorName}">`
     ).join("");
     document.getElementById("productColor").insertAdjacentHTML("afterend", swatches);
+    document.querySelectorAll(".color-swatch").forEach((swatch, index) => {
+      swatch.addEventListener("click", () => {
+        document.getElementById("productColor").textContent=
+          product.Colors[index].ColorName;
+      })
+    })
   document.getElementById("productDesc").innerHTML =
     product.DescriptionHtmlSimple;
   document.getElementById("addToCart").dataset.id = product.Id;

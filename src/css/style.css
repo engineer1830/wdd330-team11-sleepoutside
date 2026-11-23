@@ -1003,4 +1003,5 @@ img.color-swatch {
   height: 40px;
   margin: 6px;
   border-radius: 50%;
+  cursor: pointer;
 }
