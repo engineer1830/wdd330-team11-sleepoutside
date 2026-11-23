@@ -204,6 +204,10 @@ function productDetailsTemplate(product) {
     `Our Price $${product.FinalPrice.toFixed(2)}`;
   document.getElementById("productColor").textContent =
     product.Colors[0].ColorName;
+    const swatches = product.Colors.map((color) => 
+      `<img class="color-swatch" src="${color.ColorChipImageSrc}" alt="${color.ColorName}">`
+    ).join("");
+    document.getElementById("productColor").insertAdjacentHTML("afterend", swatches);
   document.getElementById("productDesc").innerHTML =
     product.DescriptionHtmlSimple;
   document.getElementById("addToCart").dataset.id = product.Id;
